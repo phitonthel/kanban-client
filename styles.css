@@ -1,0 +1,60 @@
+body {
+  background: linear-gradient(to top, #ffffff 0%, #9999ff 100%);
+}
+
+.nav {
+  background: rgb(48, 48, 48);
+  display: flex;
+  justify-content: space-between;
+}
+
+.kanban-category {
+  height: 600px;
+}
+
+.kanban-cards {
+  height: 500px;
+}
+
+.container {
+  padding: 20px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.loginRow {
+  justify-content: center;
+  height: 300px;
+  margin: 5%;
+}
+
+.loginContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* KANBAN OBJECTS (logout button etc) */
+
+/* KANBAN COLORS */
+.red {
+  background-color: lightcoral;
+}
+
+.green {
+  background-color: lightgreen;
+}
+
+.blue {
+  background-color: lightskyblue;
+}
+
+.yellow {
+  background-color: rgb(253, 255, 115);
+}
