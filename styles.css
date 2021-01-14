@@ -23,7 +23,7 @@ body {
   flex-direction: column;
 }
 
-.loginRow {
+.loginRegisterRow {
   justify-content: center;
   height: 300px;
   margin: 5%;
