@@ -5,6 +5,7 @@ body {
 .nav {
   background: rgb(48, 48, 48);
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
 }
 

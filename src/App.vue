@@ -4,11 +4,14 @@
       v-on:changePage="changePage"
       :notif="notif"
       :isLogin="isLogin"
+      :user="user"
+      @changeUser="changeUser"
       @newNotif="newNotif"></Navbar>
     <LoginPage 
       v-if="currentPage == 'login'"
       v-bind:baseUrl="baseUrl"
       v-on:changePage="changePage"
+      @changeUser="changeUser"
       @newNotif="newNotif"></LoginPage>
     <RegisterPage
       v-if="currentPage == 'register'"
@@ -45,6 +48,7 @@ export default {
     return {
       currentPage: '',
       baseUrl: 'http://localhost:3000',
+      user: '',
       notif: 'notifications/errors',
       tasks: [],
       isLogin: false
@@ -218,6 +222,9 @@ export default {
     },
     newNotif(notifications) {
       this.notif = notifications
+    },
+    changeUser(user) {
+      this.user = user
     }
   },
   created() {

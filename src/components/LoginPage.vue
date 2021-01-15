@@ -67,10 +67,11 @@ export default {
       })
       .then((response) => {
         localStorage.setItem('access_token', response.data.access_token)
+        this.$emit('changePage', 'kanban')
+        this.$emit('changeUser', this.email)
+        this.$emit('newNotif', 'You are now logged in!')
         this.email = ''
         this.password = ''
-        this.$emit('changePage', 'kanban')
-        this.$emit('newNotif', 'You are now logged in!')
       })
       .catch((err) => {
         console.log('errResp:', err);
