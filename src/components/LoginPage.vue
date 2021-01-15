@@ -15,6 +15,9 @@
             <button type="submit" class="btn btn-primary">Login</button>
           </div>
         </form>
+        <!-- Google Login -->
+        <div>Or sign in with Google:</div>
+        <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure">Login</GoogleLogin>
         <!-- Register -->
         <div id="formFooter">
           Don't have an account yet? <a id="register-btn" href="" v-on:click.prevent="cdRegister">Register</a>
@@ -26,15 +29,27 @@
 
 <script>
 import axios from 'axios'
+import GoogleLogin from 'vue-google-login';
 
 export default {
   name: "LoginPage",
-  props: ['baseUrl'],
+  props: ['baseUrl', 'onFailure'],
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      params: {
+        client_id: "880840563294-q52f5igbpervf0cej6vuo85fhla2mftm.apps.googleusercontent.com"
+      },
+      renderParams: {
+        width: 250,
+        height: 50,
+        longtitle: true
+      }
     }
+  },
+  components: {
+    GoogleLogin
   },
   methods: {
     cdRegister() {
@@ -61,7 +76,13 @@ export default {
         console.log('errResp:', err);
         this.$emit('newNotif', err.response.data.message)
       })
-    }
+    },
+    onSuccess(googleUser) {
+      console.log(googleUser);
+
+      // This only gets the user information: id, name, imageUrl and email
+      console.log(googleUser.getBasicProfile());
+    },
   }
 }
 </script>
