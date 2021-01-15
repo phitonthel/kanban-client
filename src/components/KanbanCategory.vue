@@ -10,7 +10,8 @@
           v-bind:task="item"
           @deleteTask="deleteTask"
           @moveBackward="moveBackward"
-          @moveForward="moveForward"></KanbanCard>
+          @moveForward="moveForward"
+          @editTask="editTask"></KanbanCard>
       </div>
     </div>
   </div>
@@ -40,6 +41,9 @@ export default {
     },
     moveForward(payload) {
       this.$emit('moveForward', payload)
+    },
+    editTask(payload) {
+      this.$emit('editTask', payload)
     }
   },
   computed: {

@@ -53,10 +53,12 @@ export default {
         console.log('Register success! Your email: ' + response.data);
         this.email = ''
         this.password = ''
+        this.$emit('newNotif', 'Register success!')
         this.$emit('changePage', 'login')
       })
       .catch((err) => {
-        console.log(err);
+        console.log('errResp:', err);
+        this.$emit('newNotif', err.response.data.message)
       })
     }
   }

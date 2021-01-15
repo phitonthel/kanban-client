@@ -2,9 +2,11 @@
 <!-- NAVBAR -->
   <nav class="nav">
     <h1 style="color: antiquewhite;">-Kanban!</h1>
-    <h2 style="color: antiquewhite;">notifications/errors</h2>
+    <h2 style="color: antiquewhite;">{{notif}}</h2>
     <div>
-      <a href="#" class="btn btn-primary my-2" id="btn-addTask" v-on:click="addTask">Add Task</a>
+      <a href="#" class="btn btn-primary my-2" id="btn-addTask" 
+        v-on:click="addTask"
+        v-if="isLogin == true">Add Task</a>
       <a href="#" class="btn btn-danger m-2" id="btn-logout" v-on:click="logout">Logout</a>
     </div>
   </nav>
@@ -12,15 +14,17 @@
 <script>
 export default {
   name: "Navbar",
+  props: ['notif', 'isLogin'],
   methods: {
     logout() {
       localStorage.clear()
       this.$emit('changePage', 'login')
+      this.$emit('newNotif', 'Logged out!')
     },
     addTask() {
       this.$emit('changePage', 'addTask')
     }
-  }
+  },
 }
 </script>
 

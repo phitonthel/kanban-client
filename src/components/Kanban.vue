@@ -9,7 +9,8 @@
         v-bind:tasks="tasks"
         @deleteTask="deleteTask"
         @moveBackward="moveBackward"
-        @moveForward="moveForward"></KanbanCategory>
+        @moveForward="moveForward"
+        @editTask="editTask"></KanbanCategory>
     </div>
   </div>
   <!-- # ENDS OF KANBAN CONTAINER -->
@@ -39,6 +40,9 @@ export default {
     },
     moveForward(payload) {
       this.$emit('moveForward', payload)
+    },
+    editTask(payload) {
+      this.$emit('editTask', payload)
     }
   },
   computed: {

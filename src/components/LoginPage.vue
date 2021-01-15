@@ -39,6 +39,7 @@ export default {
   methods: {
     cdRegister() {
       this.$emit('changePage', 'register')
+      this.$emit('newNotif', 'Redirected to registed page!')
     },
     login() {
       axios({
@@ -54,9 +55,11 @@ export default {
         this.email = ''
         this.password = ''
         this.$emit('changePage', 'kanban')
+        this.$emit('newNotif', 'You are now logged in!')
       })
       .catch((err) => {
-        console.log(err);
+        console.log('errResp:', err);
+        this.$emit('newNotif', err.response.data.message)
       })
     }
   }

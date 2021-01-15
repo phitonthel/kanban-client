@@ -9,6 +9,15 @@
             <input type="text" v-model="title" placeholder="Title">
           </div>
           <div class="col-3 my-2">
+            <label for="category"></label>
+            <select v-model="category" id="category">
+              <option value="backlogs">Backlogs</option>
+              <option value="developments">Developments</option>
+              <option value="products">Products</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+          <div class="col-3 my-2">
             <button type="submit" class="btn btn-primary" v-on:click.prevent="addTask">Add</button>
           </div>
         </form>
@@ -49,8 +58,10 @@ export default {
         }
       })
       .then((response) => {
+        console.log(response.data);
         this.title = ''
         this.$emit('changePage', 'kanban')
+        this.$emit('newNotif', response.data.message)
       })
       .catch((err) => {
         console.log(err);

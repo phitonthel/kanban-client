@@ -1,25 +1,32 @@
 <template>
   <div>
     <Navbar
-      v-on:changePage="changePage"></Navbar>
+      v-on:changePage="changePage"
+      :notif="notif"
+      :isLogin="isLogin"
+      @newNotif="newNotif"></Navbar>
     <LoginPage 
       v-if="currentPage == 'login'"
       v-bind:baseUrl="baseUrl"
-      v-on:changePage="changePage"></LoginPage>
+      v-on:changePage="changePage"
+      @newNotif="newNotif"></LoginPage>
     <RegisterPage
       v-if="currentPage == 'register'"
       v-bind:baseUrl="baseUrl"
-      v-on:changePage="changePage"></RegisterPage>
+      v-on:changePage="changePage"
+      @newNotif="newNotif"></RegisterPage>
     <Kanban
       v-if="currentPage == 'kanban'"
       v-bind:tasks="this.tasks"
       @deleteTask="deleteTask"
       @moveBackward="moveBackward"
-      @moveForward="moveForward"></Kanban>
+      @moveForward="moveForward"
+      @editTask="editTask"></Kanban>
     <AddTask
       v-if="currentPage == 'addTask'"
       v-bind:baseUrl="baseUrl"
-      v-on:changePage="changePage"></AddTask>
+      v-on:changePage="changePage"
+      @newNotif="newNotif"></AddTask>
   </div>
 </template>
 
@@ -38,7 +45,9 @@ export default {
     return {
       currentPage: '',
       baseUrl: 'http://localhost:3000',
-      tasks: []
+      notif: 'notifications/errors',
+      tasks: [],
+      isLogin: false
     }
   },
   components: {
@@ -50,11 +59,18 @@ export default {
   },
   methods: {
     changePage(page) {
-      this.getTasks()
+      if (localStorage.access_token) {
+        this.isLogin = true
+        this.getTasks()
+      }
+      else {
+        this.isLogin = false
+      }
       this.currentPage = page
     },
     checkAuth() {
       if (localStorage.access_token) {
+        this.isLogin = true
         this.getTasks()
         this.currentPage = 'kanban'
         console.log('login');
@@ -91,10 +107,12 @@ export default {
       })
       .then((response) => {
         console.log(response.data);
+        this.notif = response.data.message
         this.getTasks()
       })
       .catch((err) => {
         console.log(err);
+        this.notif = err.response.data.message
       })
     },
     moveBackward(payload) {
@@ -127,10 +145,12 @@ export default {
       })
       .then((response) => {
         console.log(response.data);
+        this.notif = response.data.message
         this.getTasks()
       })
       .catch((err) => {
         console.log(err);
+        this.notif = err.response.data.message
       })
     },
     moveForward(payload) {
@@ -163,11 +183,41 @@ export default {
       })
       .then((response) => {
         console.log(response.data);
+        this.notif = response.data.message
         this.getTasks()
       })
       .catch((err) => {
         console.log(err);
+        this.notif = err.response.data.message
       })
+    },
+    editTask(payload) {
+      let id = +payload.id
+      let title = payload.editTitle
+
+      //database
+      axios({
+        method: 'PUT',
+        url: this.baseUrl + '/tasks/' + id,
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          title: title
+        }
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.notif = response.data.message
+        this.getTasks()
+      })
+      .catch((err) => {
+        console.log(err);
+        this.notif = err.response.data.message
+      })
+    },
+    newNotif(notifications) {
+      this.notif = notifications
     }
   },
   created() {
