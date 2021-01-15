@@ -67,8 +67,8 @@ export default {
       })
       .then((response) => {
         localStorage.setItem('access_token', response.data.access_token)
+        localStorage.setItem('user', this.email)
         this.$emit('changePage', 'kanban')
-        this.$emit('changeUser', this.email)
         this.$emit('newNotif', 'You are now logged in!')
         this.email = ''
         this.password = ''

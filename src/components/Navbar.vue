@@ -19,9 +19,9 @@ export default {
   methods: {
     logout() {
       localStorage.clear()
+      localStorage.setItem('user', 'Guest')
       this.$emit('changePage', 'login')
       this.$emit('newNotif', 'Logged out!')
-      this.$emit('changeUser', '')
     },
     addTask() {
       this.$emit('changePage', 'addTask')

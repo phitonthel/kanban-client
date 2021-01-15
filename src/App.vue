@@ -5,13 +5,11 @@
       :notif="notif"
       :isLogin="isLogin"
       :user="user"
-      @changeUser="changeUser"
       @newNotif="newNotif"></Navbar>
     <LoginPage 
       v-if="currentPage == 'login'"
       v-bind:baseUrl="baseUrl"
       v-on:changePage="changePage"
-      @changeUser="changeUser"
       @newNotif="newNotif"></LoginPage>
     <RegisterPage
       v-if="currentPage == 'register'"
@@ -70,6 +68,9 @@ export default {
       else {
         this.isLogin = false
       }
+      if (localStorage.user) {
+        this.user = localStorage.user
+      }
       this.currentPage = page
     },
     checkAuth() {
@@ -82,6 +83,12 @@ export default {
       else {
         this.currentPage = 'login'
         console.log('not login');
+      }
+      if (localStorage.user) {
+        this.user = localStorage.user
+      }
+      else {
+        this.user = 'Guest'
       }
     },
     getTasks() {
@@ -223,9 +230,6 @@ export default {
     newNotif(notifications) {
       this.notif = notifications
     },
-    changeUser(user) {
-      this.user = user
-    }
   },
   created() {
     this.checkAuth()
